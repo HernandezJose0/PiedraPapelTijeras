@@ -1,7 +1,7 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Supervivencia {
-    private int sets, vidas = 3, ronda=0, derrotas = 0, setsA;
+    private int sets, vidas = 3, ronda=1, derrotas = 0, setsA;
     public Supervivencia(int sets) throws Exception{
         if(sets % 2 == 0) throw new Exception("El número de sets debe ser impar");
         this.sets = sets;
@@ -11,6 +11,7 @@ public class Supervivencia {
     public int getSetsA() {
         return setsA;
     }
+
 
     public int Set(int seleccion) throws Exception {
         Resultado r = new Resultado(seleccion);
@@ -35,13 +36,20 @@ public class Supervivencia {
         if (vidas <= 0) return false;
         else return true;
     }
-    public static void main(String[] args){//Los System.ou.println se deben adaptar a la interfaz grafica
+
+    public void Tiempo(int rounds){
+        Timer t = new Timer();
+        t.schedule(cronometro, 120000, 1);
+    }
+
+    public static void main(String[] args) {//Los System.ou.println se deben adaptar a la interfaz grafica
         Scanner leer = new Scanner(System.in);
-        int n,s,r=0;
+        int n,s,r=1;
         System.out.println("Sets: ");
         n = leer.nextInt();//El valor se dará por el botón
         try{
             Supervivencia su = new Supervivencia(n);
+            su.Tiempo(r);
             while (su.Vidas()){
                 int d = 0;
                 System.out.println("Ronda: "+r);
@@ -58,7 +66,15 @@ public class Supervivencia {
         }catch (Exception e){
             System.out.println(e.toString());
         }
-
     }
+
+        TimerTask cronometro = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Se acabo el tiempo");
+                System.exit(0);
+            }
+
+    };
 
 }
